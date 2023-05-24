@@ -17,17 +17,7 @@ export default function Home() {
   return (
     <>
       <MainLayout title={"Home"}>
-        <div className="content">
-          {present.map((category) => {
-            return (
-              <SectionLayout
-                key={category.title}
-                title={category.title}
-                url={category.url}
-              />
-            );
-          })}
-        </div>
+        <h1>About Page</h1>
       </MainLayout>
     </>
   );
