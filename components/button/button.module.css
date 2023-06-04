@@ -1,0 +1,18 @@
+.btn {
+  background-color: rgba(var(--clr-primary), 1);
+  color: white;
+  font-weight: 600;
+  outline: unset;
+  border: unset;
+  padding-inline: var(--s-md);
+  padding-block: var(--s-sm);
+  font-size: var(--f-sm);
+
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: rgba(var(--clr-primary), 0.5);
+}
+.btn::first-letter {
+  text-transform: uppercase;
+}

@@ -12,6 +12,8 @@ export default function About() {
     <>
       <MainLayout title={"Home"}>
         <h1>About Page</h1>
+        <p>Ntar, masih progggggress yak!</p>
+        <p>About pagenya belakangan, yang penting bisa baca dlu yekan :V</p>
       </MainLayout>
     </>
   );

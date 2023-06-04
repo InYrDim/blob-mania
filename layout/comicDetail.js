@@ -128,38 +128,42 @@ export default function ComicDetail() {
             {data.language.translatedLanguge}
           </span>
         </div>
+        {data.chapters.length > 0 ? (
+          <div aria-label="suggested-chapter">
+            <span>Start reading</span>
+            <div>
+              <div aria-label="first-chapter">
+                <span>First Chapter</span>
 
-        <div aria-label="suggested-chapter">
-          <span>Start reading</span>
-          <div>
-            <div aria-label="first-chapter">
-              <span>First Chapter</span>
-              <LinkBtn
-                href={`/comic/${comicId}/read/${chapterSugested(0).id}`}
-                name={chapterSugested(0).name}
-                blank={true}
-              />
-            </div>
-            <div aria-label="newest-chapter">
-              <span>Newest Chapter</span>
-              <LinkBtn
-                href={`/comic/${comicId}/read/${chapterSugested().id}`}
-                name={chapterSugested().name}
-                blank={true}
-              />
-            </div>
-            {latestReadedChapter.length !== 0 && (
-              <div aria-label="recently-chapter">
-                <span>Recently Chapter You Open</span>
                 <LinkBtn
-                  href={`/comic/${comicId}/read/${latestReadedChapter.id}`}
-                  name={latestReadedChapter.name}
+                  href={`/comic/${comicId}/read/${chapterSugested(0).id}`}
+                  name={chapterSugested(0).name}
                   blank={true}
                 />
               </div>
-            )}
+              <div aria-label="newest-chapter">
+                <span>Newest Chapter</span>
+                <LinkBtn
+                  href={`/comic/${comicId}/read/${chapterSugested().id}`}
+                  name={chapterSugested().name}
+                  blank={true}
+                />
+              </div>
+              {latestReadedChapter.length !== 0 && (
+                <div aria-label="recently-chapter">
+                  <span>Recently Chapter You Open</span>
+                  <LinkBtn
+                    href={`/comic/${comicId}/read/${latestReadedChapter.id}`}
+                    name={latestReadedChapter.name}
+                    blank={true}
+                  />
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div aria-label="suggested-chapter">No Chapters</div>
+        )}
       </div>
 
       <div className="comic-detail-cover">
@@ -170,18 +174,22 @@ export default function ComicDetail() {
         <h3>Chapter List</h3>
         <div className="chapter-list-wrapper">
           <div aria-label="chapter_list" id="chapter_list">
-            {data.chapters
-              .map((chapter) => {
-                return (
-                  <LinkBtn
-                    key={chapter.id}
-                    href={`/comic/${comicId}/read/${chapter.id}`}
-                    name={chapter.name}
-                    blank={true}
-                  />
-                );
-              })
-              .reverse()}
+            {data.chapters.length > 0 ? (
+              data.chapters
+                .map((chapter) => {
+                  return (
+                    <LinkBtn
+                      key={chapter.id}
+                      href={`/comic/${comicId}/read/${chapter.id}`}
+                      name={chapter.name}
+                      blank={true}
+                    />
+                  );
+                })
+                .reverse()
+            ) : (
+              <a>No Chapters data or deleted</a>
+            )}
           </div>
         </div>
       </div>

@@ -19,12 +19,33 @@ export default function SectionLayout({ title, url, children, maxData = 10 }) {
     })();
   }, []);
 
+  if (!comicData) {
+    return (
+      <section aria-label="loading" className="section-wrapper">
+        <div className="loading-title">
+          <div></div>
+        </div>
+        <div className="card-container">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        {children}
+      </section>
+    );
+  }
   return (
     comicData && (
       <section aria-label={title} className="section-wrapper">
         <h2 className="section_title" aria-label="section-title">
           {title}
         </h2>
+
         <div className="card-container">
           {comicData &&
             comicData.map((item, i) => {
