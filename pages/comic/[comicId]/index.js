@@ -1,10 +1,11 @@
 // styles import
 
 // data imports
-import { present } from "@/data/homeShow";
+import { present } from "@/data/homeData";
 
 // layouts import
 import MainLayout from "@/layout/mainLayout";
+import ComicDetail from "@/layout/comicDetail";
 
 // fonts definitions
 
@@ -13,10 +14,12 @@ import { useRouter } from "next/router";
 
 export default function Home() {
   const routerPath = useRouter().asPath;
+  const id = routerPath.split(/\//).pop();
+
   return (
     <>
-      <MainLayout title={"Home"}>
-        <div className="content">{routerPath}</div>
+      <MainLayout>
+        <ComicDetail />
       </MainLayout>
     </>
   );

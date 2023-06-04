@@ -8,3 +8,11 @@ export async function getComicData({ url, maxData = 35 }) {
     }
   });
 }
+
+// class GetComicData {
+//   constructor() {}
+
+//   getSpecificData({ comicId }) {
+//     const _comicId = comicId;
+//   }
+// }

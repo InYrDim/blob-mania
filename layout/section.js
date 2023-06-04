@@ -6,6 +6,7 @@ import { getComicData } from "@/data/fetchData";
 
 // component imports
 import Card from "@/components/card";
+import LinkBtn from "@/components/link_btn";
 
 export default function SectionLayout({ title, url, children, maxData = 10 }) {
   const [comicData, setComicData] = useState("");
@@ -29,13 +30,18 @@ export default function SectionLayout({ title, url, children, maxData = 10 }) {
             comicData.map((item, i) => {
               if (i < maxData) {
                 return (
-                  <Card
-                    name={item.title}
+                  <LinkBtn
                     key={item.id}
-                    comicId={item.id}
-                    src={item.cover.src}
-                    altName={item.cover.altName}
-                  />
+                    href={`/comic/${item.id}`}
+                    blank={true}
+                  >
+                    <Card
+                      name={item.title}
+                      comicId={item.id}
+                      src={item.cover.src}
+                      altName={item.cover.altName}
+                    />
+                  </LinkBtn>
                 );
               }
             })}
