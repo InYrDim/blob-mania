@@ -18,6 +18,7 @@ const MULTIPLE_CHECKBOX_CONDITIONS = [
 export default function Checkbox({
   name,
   dataType,
+  dataValue,
   onlySelectOne = false,
   options = [],
 }) {
@@ -41,26 +42,19 @@ export default function Checkbox({
   if (onlySelectOne) {
     return (
       <>
-        {options.map((option) => {
-          return (
-            <div
-              key={option.data}
-              onClick={() => handleSingleCheckboxChange(option.data)}
-              data-type={dataType}
-              data-value={option.data}
-              data-ischecked={
-                selectedOption === option.data ? "included" : "idle"
-              }
-              className={`${style.item_checkbox}`}
-              aria-label="item-checkbox"
-            >
-              {selectedOption === option.data
-                ? AiFillCheckSquare()
-                : AiOutlineBorder()}
-              <span>{option.name}</span>
-            </div>
-          );
-        })}
+        <div
+          onClick={() => handleSingleCheckboxChange(dataValue)}
+          data-type={dataType}
+          data-value={dataValue}
+          data-ischecked={selectedOption === dataValue ? "included" : "idle"}
+          className={`${style.item_checkbox}`}
+          aria-label="item-checkbox"
+        >
+          {selectedOption === dataValue
+            ? AiFillCheckSquare()
+            : AiOutlineBorder()}
+          <span>{name}</span>
+        </div>
       </>
     );
   }
@@ -70,7 +64,8 @@ export default function Checkbox({
       <div
         onClick={handleClickChange}
         data-type={dataType}
-        data-value={MULTIPLE_CHECKBOX_CONDITIONS[currentStateIndex].state}
+        data-ischecked={MULTIPLE_CHECKBOX_CONDITIONS[currentStateIndex].state}
+        data-value={dataValue}
         className={`${style.item_checkbox}`}
         aria-label="item-checkbox"
       >

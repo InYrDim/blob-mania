@@ -6,7 +6,7 @@ const language =
 
 export const comicProps = {
   domain: "https://battwo.com",
-  order: [
+  orders: [
     { name: "score", data: "field_score" },
     { name: "follow", data: "field_follow" },
     { name: "review", data: "field_review" },
@@ -17,7 +17,7 @@ export const comicProps = {
     { name: "name", data: "field_name" },
     { name: "views", data: "views_d000" },
   ],
-  genres: plainGenre.split(","),
+  genres: plainGenre.split(",").sort(),
   status: ["complete", "pending", "ongoing", "hiatus", "cancelled"],
   originaLanguage: language.split(","),
   translatedLanguage: language.split(","),

@@ -9,10 +9,7 @@
   color: rgba(var(--clr-secondary), 0.7);
   text-transform: capitalize;
 }
-.item_checkbox[data-value="included"] svg {
-  fill: rgba(var(--clr-primary), 0.7);
-}
-.item_checkbox[data-value="excluded"] svg {
+.item_checkbox[data-ischecked="excluded"] svg {
   fill: rgba(var(--clr-danger), 0.7);
 }
 .item_checkbox[data-ischecked="included"] svg {

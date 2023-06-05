@@ -22,7 +22,7 @@ import genresCombinator from "@/utils/genreCombinator";
 function resolveInnerText(arr, attribute, value) {
   return [...arr]
     .filter((element) => element.getAttribute(attribute) === value)
-    .map((element) => element.innerText);
+    .map((element) => element.getAttribute("data-value"));
 }
 
 export default function Browse() {
@@ -35,14 +35,15 @@ export default function Browse() {
     const wordValue = word.value.toString();
 
     const dataGenres = document.querySelectorAll('[data-type="genre"]');
+
     const includedGenres = resolveInnerText(
       dataGenres,
-      "data-value",
+      "data-ischecked",
       "included"
     );
     const excludedGenres = resolveInnerText(
       dataGenres,
-      "data-value",
+      "data-ischecked",
       "excluded"
     );
 
@@ -109,6 +110,7 @@ export default function Browse() {
                     key={i}
                     name={genre.split("_").join(" ")}
                     dataType={"genre"}
+                    dataValue={genre}
                   />
                 );
               })}
@@ -118,11 +120,17 @@ export default function Browse() {
           <div className="checkbox-container">
             <p className="checkbox-title">Order</p>
             <div className="checkbox-items-container">
-              <Checkbox
-                options={comicProps.order}
-                dataType={"order"}
-                onlySelectOne={true}
-              />
+              {comicProps.orders.map((order, i) => {
+                return (
+                  <Checkbox
+                    key={i}
+                    dataValue={order.data}
+                    name={order.name}
+                    dataType={"order"}
+                    onlySelectOne={true}
+                  />
+                );
+              })}
             </div>
           </div>
 
