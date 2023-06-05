@@ -3,7 +3,9 @@
 // styles import
 
 // data imports
-import { getComicData } from "@/data/fetchData";
+import getSearchComicUrl from "@/data/fetchComic/getSearchUrl";
+import { GENRES_FILTER } from "@/data/genresFilter";
+import { comicProps } from "@/data/batoto_property";
 
 // layouts import
 import MainLayout from "@/layout/mainLayout";
@@ -14,42 +16,77 @@ import { useState, useEffect } from "react";
 // components imports
 import SearchInput from "@/components/search";
 import Button from "@/components/button/Button";
+import Checkbox from "@/components/checkbox";
+import genresCombinator from "@/utils/genreCombinator";
+
+function resolveInnerText(arr, attribute, value) {
+  return [...arr]
+    .filter((element) => element.getAttribute(attribute) === value)
+    .map((element) => element.innerText);
+}
 
 export default function Browse() {
   const [comicResult, setComicResult] = useState();
-  const [clear, setClear] = useState(false);
+  const [search, setSearch] = useState(false);
   const [page, setPage] = useState(1);
 
-  function handleSearch() {
+  function handleSearchQuery() {
     const word = document.getElementById("search-comic");
     const wordValue = word.value.toString();
 
-    setComicResult(undefined);
+    const dataGenres = document.querySelectorAll('[data-type="genre"]');
+    const includedGenres = resolveInnerText(
+      dataGenres,
+      "data-value",
+      "included"
+    );
+    const excludedGenres = resolveInnerText(
+      dataGenres,
+      "data-value",
+      "excluded"
+    );
 
-    async function getSearchComic(callback) {
-      const response = await fetch(
-        `https://bato-to.vercel.app/browse?search=${wordValue}&lang=id&genres=|yaoi,|yuri,|smut,|harem,|ecchi,|gore,|adult`
-      );
-      const data = await response.json();
-      callback(data);
-    }
+    const dataOrder = document.querySelector(
+      '[data-type="order"][data-ischecked="included"]'
+    );
+    const searchQuery = {
+      search: wordValue,
+      order: dataOrder?.getAttribute("data-value"),
+      genres: genresCombinator({
+        includedGenres,
+        excludedGenres: [
+          ...excludedGenres /* pilihan ente */,
+          ...GENRES_FILTER /* filter aing 🥶 */,
+        ],
+      }),
+    };
 
-    if (wordValue !== "") {
-      getSearchComic(setComicResult);
-    }
+    return searchQuery;
   }
 
   useEffect(() => {
-    async function getSearchComic(callback) {
-      const response = await fetch(
-        `https://bato-to.vercel.app/browse?page=${page}&lang=id&genres=|yaoi,|yuri,|smut,|harem,|ecchi,|gore,|adult,|hentai`
-      );
-      const data = await response.json();
-      callback(data);
-    }
-    getSearchComic(setComicResult);
-  }, [page]);
+    const controller = new AbortController();
+    const signal = controller.signal;
 
+    const queryParams = handleSearchQuery();
+    const url = getSearchComicUrl(queryParams);
+
+    setComicResult(undefined);
+
+    fetch(url, { signal })
+      .then((response) => response.json())
+      .then((responseData) => setComicResult(responseData))
+      .catch(function (e) {
+        if (e instanceof DOMException && e.name == "AbortError") return;
+        console.log(e.message);
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, [search]);
+
+  // firstRendering
   return (
     <>
       <MainLayout title={"Browse"}>
@@ -57,10 +94,37 @@ export default function Browse() {
         <section className="browse top_green_line">
           <h2>Search</h2>
           <SearchInput
-            handleSearch={handleSearch}
-            setComicResult={setComicResult}
-            setSearch={setClear}
+            handleSearch={() => {
+              setSearch((search) => !search);
+            }}
           />
+
+          {/* checkbox */}
+          <div className="checkbox-container">
+            <p className="checkbox-title">Genres</p>
+            <div className="checkbox-items-container">
+              {comicProps.genres.map((genre, i) => {
+                return (
+                  <Checkbox
+                    key={i}
+                    name={genre.split("_").join(" ")}
+                    dataType={"genre"}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="checkbox-container">
+            <p className="checkbox-title">Order</p>
+            <div className="checkbox-items-container">
+              <Checkbox
+                options={comicProps.order}
+                dataType={"order"}
+                onlySelectOne={true}
+              />
+            </div>
+          </div>
 
           {comicResult ? (
             <section
@@ -103,7 +167,7 @@ export default function Browse() {
               <Button
                 name="next"
                 onClick={() => {
-                  setPage(page + 1);
+                  setPage((page) => page + 1);
                   setComicResult(undefined);
                 }}
               />
@@ -112,7 +176,7 @@ export default function Browse() {
                 name="prev"
                 onClick={() => {
                   if (page > 1) {
-                    setPage(page - 1);
+                    setPage((page) => page - 1);
                     setComicResult(undefined);
                   }
                 }}

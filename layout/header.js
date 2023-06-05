@@ -17,7 +17,6 @@ import { navigations } from "@/data/mainNavigations";
 export default function MainHeader() {
   const path = useRouter().asPath;
   const [active, setActive] = useState(false);
-  console.log(active);
 
   return (
     <header className="main_header" aria-label="main_header">

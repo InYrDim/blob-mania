@@ -2,6 +2,7 @@
   /* color */
   --clr-primary: 2, 174, 112;
   --clr-secondary: 29, 29, 29;
+  --clr-danger: 217, 13, 13;
 
   /* size */
   --max-xl: 70rem;
@@ -82,6 +83,10 @@
 .center {
   display: grid;
   place-content: center;
+}
+.alignCenter {
+  display: flex;
+  align-items: center;
 }
 .top_green_line {
   border-top: 2px solid rgba(var(--clr-primary), 0.7);
@@ -644,4 +649,18 @@ footer .footer-extended a:hover {
 h1 {
   font-size: var(--f-lg);
   margin-block-start: var(--s-md);
+}
+
+/* checkbox */
+.checkbox-container {
+  margin-block-start: var(--s-md);
+}
+.checkbox-items-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 4px;
+}
+.checkbox-title {
+  font-size: var(--f-2sm);
+  font-weight: 500;
 }
