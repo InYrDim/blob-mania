@@ -655,12 +655,39 @@ h1 {
 .checkbox-container {
   margin-block-start: var(--s-md);
 }
+.checkbox-container .checkbox-title {
+  font-size: var(--f-2sm);
+  text-transform: capitalize;
+  font-weight: 500;
+  background-color: rgba(var(--clr-secondary), 0.2);
+  padding-inline: var(--s-sm);
+  width: fit-content;
+}
+.checkbox-container[data-layout="main"] > .checkbox-title {
+  background-color: rgba(var(--clr-primary), 0.2);
+  padding-inline: var(--s-sm);
+  padding-block: var(--s-sm);
+  margin-block-end: var(--s-sm);
+  border-radius: var(--s-sm);
+  width: auto;
+}
 .checkbox-items-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 4px;
 }
-.checkbox-title {
-  font-size: var(--f-2sm);
-  font-weight: 500;
+.checkbox-container[aria-label="genres_checkbox"] > .checkbox-items-container {
+  display: flex !important;
+  flex-direction: column;
+}
+.checkbox-container[data-layout="genres"] .checkbox-title {
+  font-size: var(--f-sm);
+  text-transform: capitalize;
+  font-weight: 300;
+}
+@media only screen and (max-width: 380px) {
+  .custom-colums {
+    grid-template-columns: repeat(2, 1fr) !important;
+    font-size: clamp(0.9rem, 2vw, var(--f-sm));
+  }
 }

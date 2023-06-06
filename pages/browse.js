@@ -9,6 +9,7 @@ import { comicProps } from "@/data/batoto_property";
 
 // layouts import
 import MainLayout from "@/layout/mainLayout";
+import CheckboxLayout from "@/layout/checkbox";
 
 // library imports
 import { useState, useEffect } from "react";
@@ -19,10 +20,31 @@ import Button from "@/components/button/Button";
 import Checkbox from "@/components/checkbox";
 import genresCombinator from "@/utils/genreCombinator";
 
-function resolveInnerText(arr, attribute, value) {
-  return [...arr]
+const DATA_NAME = "data-ischecked";
+
+function getSelectedGenresDataValue(nodeList, attribute, value) {
+  return [...nodeList]
     .filter((element) => element.getAttribute(attribute) === value)
     .map((element) => element.getAttribute("data-value"));
+}
+function genresChekboxHandler(checkboxNodelist) {
+  const includedGenres = getSelectedGenresDataValue(
+    checkboxNodelist,
+    DATA_NAME,
+    "included"
+  );
+  const excludedGenres = getSelectedGenresDataValue(
+    checkboxNodelist,
+    DATA_NAME,
+    "excluded"
+  );
+
+  return { includedGenres, excludedGenres };
+}
+function flagEmojiToIso(flag) {
+  return String.fromCodePoint(
+    ...[...flag].map((c) => c.codePointAt() - 127397)
+  ).toLowerCase();
 }
 
 export default function Browse() {
@@ -31,28 +53,32 @@ export default function Browse() {
   const [page, setPage] = useState(1);
 
   function handleSearchQuery() {
+    // search words
     const word = document.getElementById("search-comic");
     const wordValue = word.value.toString();
 
+    // genres
     const dataGenres = document.querySelectorAll('[data-type="genre"]');
+    const { includedGenres, excludedGenres } = genresChekboxHandler(dataGenres);
 
-    const includedGenres = resolveInnerText(
-      dataGenres,
-      "data-ischecked",
-      "included"
-    );
-    const excludedGenres = resolveInnerText(
-      dataGenres,
-      "data-ischecked",
-      "excluded"
-    );
-
+    // order
     const dataOrder = document.querySelector(
       '[data-type="order"][data-ischecked="included"]'
     );
+    // status
+    const dataStatus = document.querySelector(
+      '[data-type="status"][data-ischecked="included"]'
+    );
+    // translatedLanguages
+    const dataTranslatedLanguages = document.querySelector(
+      '[data-type="tlLang"][data-ischecked="included"]'
+    );
+    // wrap querySearch
     const searchQuery = {
       search: wordValue,
       order: dataOrder?.getAttribute("data-value"),
+      status: dataStatus?.getAttribute("data-value"),
+      lang: dataTranslatedLanguages?.getAttribute("data-value"),
       genres: genresCombinator({
         includedGenres,
         excludedGenres: [
@@ -87,7 +113,6 @@ export default function Browse() {
     };
   }, [search]);
 
-  // firstRendering
   return (
     <>
       <MainLayout title={"Browse"}>
@@ -100,63 +125,102 @@ export default function Browse() {
             }}
           />
 
-          {/* checkbox */}
-          <div className="checkbox-container">
-            <p className="checkbox-title">Genres</p>
-            <div className="checkbox-items-container">
-              {comicProps.genres.map((genre, i) => {
+          <div
+            className="advance-search-filter"
+            aria-label="advance_search_filter"
+          >
+            <CheckboxLayout
+              title={comicProps.contentType.name}
+              others={{ "data-layout": "main" }}
+            >
+              {comicProps.contentType.filters.sort().map((type, i) => {
                 return (
                   <Checkbox
                     key={i}
-                    name={genre.split("_").join(" ")}
+                    dataValue={type}
+                    name={type.split("_").join(" ")}
                     dataType={"genre"}
-                    dataValue={genre}
                   />
                 );
               })}
-            </div>
-          </div>
+            </CheckboxLayout>
 
-          <div className="checkbox-container">
-            <p className="checkbox-title">Order</p>
-            <div className="checkbox-items-container">
-              {comicProps.orders.map((order, i) => {
+            <CheckboxLayout
+              title={comicProps.genres.name}
+              others={{ "data-layout": "main" }}
+            >
+              {comicProps.genres.filters.map((genreType, i) => {
+                return (
+                  <CheckboxLayout
+                    key={i}
+                    title={`${genreType.name}`}
+                    others={{ "data-layout": comicProps.genres.name }}
+                  >
+                    {genreType.filters.sort().map((filter, j) => {
+                      return (
+                        <Checkbox
+                          key={j}
+                          dataValue={filter}
+                          name={filter.split("_").join(" ")}
+                          dataType={"genre"}
+                        />
+                      );
+                    })}
+                  </CheckboxLayout>
+                );
+              })}
+            </CheckboxLayout>
+
+            <CheckboxLayout title={"Order"} others={{ "data-layout": "main" }}>
+              {comicProps.orders.filters.map((order, i) => {
                 return (
                   <Checkbox
                     key={i}
-                    dataValue={order.data}
+                    dataValue={order.filters}
                     name={order.name}
                     dataType={"order"}
                     onlySelectOne={true}
                   />
                 );
               })}
-            </div>
-          </div>
+            </CheckboxLayout>
 
-          {comicResult ? (
-            <section
-              className="search-card-container"
-              aria-label="search-card-container"
+            <CheckboxLayout
+              title={comicProps.status.name}
+              others={{ "data-layout": "main" }}
             >
-              {comicResult.map((item, i) => {
+              {comicProps.status.filters.map((stats, i) => {
                 return (
-                  // <LinkBtn key={item.id} href={`/comic/${item.id}`} blank={true}>
-                  <article
-                    className="card"
-                    key={item.id}
-                    onClick={() => {
-                      window.open(`/comic/${item.id}`);
-                    }}
-                  >
-                    <img src={item.cover.src} alt={item.cover.altName} />
-                    <div className="caption">{item.title}</div>
-                  </article>
-                  // </LinkBtn>
+                  <Checkbox
+                    key={i}
+                    dataValue={stats}
+                    name={stats}
+                    dataType={"status"}
+                    onlySelectOne={true}
+                  />
                 );
               })}
-            </section>
-          ) : (
+            </CheckboxLayout>
+            <CheckboxLayout
+              title={comicProps.translatedLanguage.name}
+              others={{ "data-layout": "main" }}
+            >
+              {comicProps.translatedLanguage.filters.map((countryCode, i) => {
+                return (
+                  <Checkbox
+                    key={i}
+                    name={`${countryCode.emoji} ${countryCode.name}`}
+                    dataValue={flagEmojiToIso(countryCode.emoji)}
+                    dataType={"tlLang"}
+                    onlySelectOne={true}
+                  />
+                );
+              })}
+            </CheckboxLayout>
+          </div>
+
+          {/* loading comic data UI */}
+          {!comicResult && (
             <section aria-label="loading" className="section-wrapper">
               <div className="card-container">
                 <div></div>
@@ -164,6 +228,29 @@ export default function Browse() {
                 <div></div>
                 <div></div>
               </div>
+            </section>
+          )}
+
+          {comicResult && (
+            <section
+              className="search-card-container"
+              aria-label="search-card-container"
+            >
+              {comicResult.map((item, i) => {
+                return (
+                  <div
+                    className="card"
+                    key={item.id}
+                    onClick={() => {
+                      // manual new tab
+                      window.open(`/comic/${item.id}`);
+                    }}
+                  >
+                    <img src={item.cover.src} alt={item.cover.altName} />
+                    <div className="caption">{item.title}</div>
+                  </div>
+                );
+              })}
             </section>
           )}
 

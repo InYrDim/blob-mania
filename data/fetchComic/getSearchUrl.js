@@ -7,7 +7,8 @@ function getSearchComicUrl(requireParams) {
     genres = genresCombinator(),
     page = "1",
     lang = "id",
-    order = comicProps.orders[0].data,
+    status = "",
+    order = "",
   } = requireParams; // destructure
 
   const setRequireParams = {
@@ -16,6 +17,7 @@ function getSearchComicUrl(requireParams) {
     page,
     lang,
     order,
+    status,
   };
 
   const queryParams = Object.entries(setRequireParams).reduce(

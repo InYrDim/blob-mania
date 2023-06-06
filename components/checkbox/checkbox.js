@@ -20,7 +20,6 @@ export default function Checkbox({
   dataType,
   dataValue,
   onlySelectOne = false,
-  options = [],
 }) {
   const [currentStateIndex, setCurrentStateIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState("idle");
