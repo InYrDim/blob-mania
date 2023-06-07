@@ -1,9 +1,13 @@
-export default function CheckboxLayout({ children, title = "", others = {} }) {
+export default function SelectLayout({
+  children,
+  title = "",
+  layout = "main",
+}) {
   return (
     <div
-      className="checkbox-container "
+      className="checkbox-container"
       aria-label={`${title}_checkbox`}
-      {...others}
+      data-layout={layout}
     >
       <p className="checkbox-title">{title}</p>
       <div className="checkbox-items-container custom-colums">{children}</div>

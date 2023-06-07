@@ -4,14 +4,15 @@
   justify-content: center;
   width: fit-content;
   gap: 4px;
+  min-height: 20px;
 }
 .item_checkbox span {
-  color: rgba(var(--clr-secondary), 0.7);
+  color: rgba(var(--clr-secondary-90));
   text-transform: capitalize;
 }
-.item_checkbox[data-ischecked="excluded"] svg {
-  fill: rgba(var(--clr-danger), 0.7);
+.item_checkbox[data-checked_as="excluded"] svg {
+  fill: rgba(var(--clr-danger));
 }
-.item_checkbox[data-ischecked="included"] svg {
-  fill: rgba(var(--clr-primary), 0.7);
+.item_checkbox[data-checked_as="included"] svg {
+  fill: rgba(var(--clr-primary-70));
 }

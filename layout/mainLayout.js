@@ -1,6 +1,6 @@
 // layout import
-import Footer from "./footer";
-import MainHeader from "./header";
+import Footer from "../components/UIComponent/footer";
+import MainHeader from "../components/UIComponent/header";
 import HeadLayout from "./headLayout";
 
 // library imports

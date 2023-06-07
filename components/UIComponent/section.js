@@ -8,15 +8,25 @@ import { getComicData } from "@/data/fetchData";
 import Card from "@/components/card";
 import LinkBtn from "@/components/link_btn";
 
+// utlis imports
+import { fetchErrorHandler } from "@/utils/fetchErrorHandler";
+
 export default function SectionLayout({ title, url, children, maxData = 10 }) {
   const [comicData, setComicData] = useState("");
 
   useEffect(() => {
-    (async () => {
-      const data = await getComicData({ url: url, maxData: maxData });
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-      setComicData(data);
-    })();
+    getComicData({ url: url, maxData: maxData, signal })
+      .then((data) => {
+        setComicData(data);
+      })
+      .catch(fetchErrorHandler);
+
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   if (!comicData) {

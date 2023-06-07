@@ -5,11 +5,9 @@
 // data imports
 import getSearchComicUrl from "@/data/fetchComic/getSearchUrl";
 import { GENRES_FILTER } from "@/data/genresFilter";
-import { comicProps } from "@/data/batoto_property";
 
 // layouts import
 import MainLayout from "@/layout/mainLayout";
-import CheckboxLayout from "@/layout/checkbox";
 
 // library imports
 import { useState, useEffect } from "react";
@@ -17,79 +15,58 @@ import { useState, useEffect } from "react";
 // components imports
 import SearchInput from "@/components/search";
 import Button from "@/components/button/Button";
-import Checkbox from "@/components/checkbox";
 import genresCombinator from "@/utils/genreCombinator";
 
-const DATA_NAME = "data-ischecked";
+// UI Components
+import ContentFilter from "@/components/UIComponent/content_filter";
 
-function getSelectedGenresDataValue(nodeList, attribute, value) {
-  return [...nodeList]
-    .filter((element) => element.getAttribute(attribute) === value)
-    .map((element) => element.getAttribute("data-value"));
-}
-function genresChekboxHandler(checkboxNodelist) {
-  const includedGenres = getSelectedGenresDataValue(
-    checkboxNodelist,
-    DATA_NAME,
-    "included"
-  );
-  const excludedGenres = getSelectedGenresDataValue(
-    checkboxNodelist,
-    DATA_NAME,
-    "excluded"
-  );
+// utils imports
+import { fetchErrorHandler } from "@/utils/fetchErrorHandler";
+import { useFetchWithAbort } from "@/utils/useFetchWithAbort";
 
-  return { includedGenres, excludedGenres };
-}
-function flagEmojiToIso(flag) {
-  return String.fromCodePoint(
-    ...[...flag].map((c) => c.codePointAt() - 127397)
-  ).toLowerCase();
-}
+function handleSearchQuery() {
+  function selectBoxDataValue({ dataType, type = "included" }) {
+    return [
+      ...document.querySelectorAll(
+        `[data-type="${dataType}"][data-checked_as=${type}]`
+      ),
+    ].map((genre) => genre?.getAttribute("data-value"));
+  }
+  // search words
+  const word = document.getElementById("search-comic");
+  const wordValue = word.value.toString();
 
+  // content_filter
+  const includedGenres = selectBoxDataValue({ dataType: "genre" });
+  const excludedGenres = selectBoxDataValue({
+    dataType: "genre",
+    type: "excluded",
+  });
+  const dataOrder = selectBoxDataValue({ dataType: "order" });
+  const dataStatus = selectBoxDataValue({ dataType: "status" });
+
+  const dataTranslatedLanguages = selectBoxDataValue({
+    dataType: "tlLang",
+  });
+
+  const searchQuery = {
+    search: wordValue,
+    order: dataOrder,
+    status: dataStatus,
+    lang: dataTranslatedLanguages,
+    genres: genresCombinator({
+      includedGenres,
+      excludedGenres: [...excludedGenres, ...GENRES_FILTER],
+    }),
+  };
+
+  console.log(searchQuery.genres);
+  return searchQuery;
+}
 export default function Browse() {
   const [comicResult, setComicResult] = useState();
   const [search, setSearch] = useState(false);
   const [page, setPage] = useState(1);
-
-  function handleSearchQuery() {
-    // search words
-    const word = document.getElementById("search-comic");
-    const wordValue = word.value.toString();
-
-    // genres
-    const dataGenres = document.querySelectorAll('[data-type="genre"]');
-    const { includedGenres, excludedGenres } = genresChekboxHandler(dataGenres);
-
-    // order
-    const dataOrder = document.querySelector(
-      '[data-type="order"][data-ischecked="included"]'
-    );
-    // status
-    const dataStatus = document.querySelector(
-      '[data-type="status"][data-ischecked="included"]'
-    );
-    // translatedLanguages
-    const dataTranslatedLanguages = document.querySelector(
-      '[data-type="tlLang"][data-ischecked="included"]'
-    );
-    // wrap querySearch
-    const searchQuery = {
-      search: wordValue,
-      order: dataOrder?.getAttribute("data-value"),
-      status: dataStatus?.getAttribute("data-value"),
-      lang: dataTranslatedLanguages?.getAttribute("data-value"),
-      genres: genresCombinator({
-        includedGenres,
-        excludedGenres: [
-          ...excludedGenres /* pilihan ente */,
-          ...GENRES_FILTER /* filter aing 🥶 */,
-        ],
-      }),
-    };
-
-    return searchQuery;
-  }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -100,13 +77,22 @@ export default function Browse() {
 
     setComicResult(undefined);
 
-    fetch(url, { signal })
-      .then((response) => response.json())
-      .then((responseData) => setComicResult(responseData))
-      .catch(function (e) {
-        if (e instanceof DOMException && e.name == "AbortError") return;
-        console.log(e.message);
-      });
+    try {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(url, { signal });
+          const data = await response.json();
+
+          setComicResult(data);
+        } catch (err) {
+          fetchErrorHandler(err);
+        }
+      };
+
+      fetchData();
+    } catch (err) {
+      fetchErrorHandler(err);
+    }
 
     return () => {
       controller.abort();
@@ -124,102 +110,8 @@ export default function Browse() {
               setSearch((search) => !search);
             }}
           />
+          <ContentFilter />
 
-          <div
-            className="advance-search-filter"
-            aria-label="advance_search_filter"
-          >
-            <CheckboxLayout
-              title={comicProps.contentType.name}
-              others={{ "data-layout": "main" }}
-            >
-              {comicProps.contentType.filters.sort().map((type, i) => {
-                return (
-                  <Checkbox
-                    key={i}
-                    dataValue={type}
-                    name={type.split("_").join(" ")}
-                    dataType={"genre"}
-                  />
-                );
-              })}
-            </CheckboxLayout>
-
-            <CheckboxLayout
-              title={comicProps.genres.name}
-              others={{ "data-layout": "main" }}
-            >
-              {comicProps.genres.filters.map((genreType, i) => {
-                return (
-                  <CheckboxLayout
-                    key={i}
-                    title={`${genreType.name}`}
-                    others={{ "data-layout": comicProps.genres.name }}
-                  >
-                    {genreType.filters.sort().map((filter, j) => {
-                      return (
-                        <Checkbox
-                          key={j}
-                          dataValue={filter}
-                          name={filter.split("_").join(" ")}
-                          dataType={"genre"}
-                        />
-                      );
-                    })}
-                  </CheckboxLayout>
-                );
-              })}
-            </CheckboxLayout>
-
-            <CheckboxLayout title={"Order"} others={{ "data-layout": "main" }}>
-              {comicProps.orders.filters.map((order, i) => {
-                return (
-                  <Checkbox
-                    key={i}
-                    dataValue={order.filters}
-                    name={order.name}
-                    dataType={"order"}
-                    onlySelectOne={true}
-                  />
-                );
-              })}
-            </CheckboxLayout>
-
-            <CheckboxLayout
-              title={comicProps.status.name}
-              others={{ "data-layout": "main" }}
-            >
-              {comicProps.status.filters.map((stats, i) => {
-                return (
-                  <Checkbox
-                    key={i}
-                    dataValue={stats}
-                    name={stats}
-                    dataType={"status"}
-                    onlySelectOne={true}
-                  />
-                );
-              })}
-            </CheckboxLayout>
-            <CheckboxLayout
-              title={comicProps.translatedLanguage.name}
-              others={{ "data-layout": "main" }}
-            >
-              {comicProps.translatedLanguage.filters.map((countryCode, i) => {
-                return (
-                  <Checkbox
-                    key={i}
-                    name={`${countryCode.emoji} ${countryCode.name}`}
-                    dataValue={flagEmojiToIso(countryCode.emoji)}
-                    dataType={"tlLang"}
-                    onlySelectOne={true}
-                  />
-                );
-              })}
-            </CheckboxLayout>
-          </div>
-
-          {/* loading comic data UI */}
           {!comicResult && (
             <section aria-label="loading" className="section-wrapper">
               <div className="card-container">

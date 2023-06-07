@@ -1,7 +1,7 @@
 import genresCombinator from "@/utils/genreCombinator";
 import { comicProps } from "../batoto_property";
 
-function getSearchComicUrl(requireParams) {
+function getSearchComicUrl(requireParams = {}) {
   const {
     search = "",
     genres = genresCombinator(),

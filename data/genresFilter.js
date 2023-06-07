@@ -4,9 +4,9 @@ export const GENRES_FILTER = [
   "smut",
   "harem",
   "ecchi",
-  "gore",
   "adult",
   "hentai",
   "mature",
   "doujinshi",
+  "sm_bdsm",
 ];
