@@ -5,14 +5,14 @@ import { present } from "@/data/homeData";
 
 // layouts import
 import MainLayout from "@/layout/mainLayout";
-import ComicDetail from "@/layout/comicDetail";
+import ComicDetail from "@/pageComponents/comic/comicDetail";
 
 // fonts definitions
 
 // library imports
 import { useRouter } from "next/router";
 
-export default function Home() {
+export default function Comic() {
   const routerPath = useRouter().asPath;
   const id = routerPath.split(/\//).pop();
 

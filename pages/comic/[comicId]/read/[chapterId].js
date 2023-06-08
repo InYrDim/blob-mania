@@ -1,12 +1,8 @@
 // styles import
 
-// data imports
-
 // layouts import
 import MainLayout from "@/layout/mainLayout";
-import ReadComic from "@/layout/readComic";
-
-// fonts definitions
+import ReadComic from "@/pageComponents/read/readComic";
 
 // library imports
 import { useRouter } from "next/router";

@@ -2,13 +2,13 @@
 import SelectLayout from "@/layout/SelectLayout";
 
 // components imports
-import Radio from "../radio/radio";
-import Checkbox from "../checkbox/checkbox";
+import Checkbox from "@/components/forms/checkbox/";
+import Radio from "@/components/forms/radio/";
 
 // data imports
 import { comicProps } from "@/data/batoto_property";
 
-export default function ContentFilter() {
+export function ContentFilter() {
   return (
     <div className="advance-search-filter" aria-label="advance_search_filter">
       {/* contentType */}

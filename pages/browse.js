@@ -1,11 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 
-// styles import
-
-// data imports
-import getSearchComicUrl from "@/data/fetchComic/getSearchUrl";
-import { GENRES_FILTER } from "@/data/genresFilter";
-
 // layouts import
 import MainLayout from "@/layout/mainLayout";
 
@@ -13,98 +7,48 @@ import MainLayout from "@/layout/mainLayout";
 import { useState, useEffect } from "react";
 
 // components imports
-import SearchInput from "@/components/search";
-import Button from "@/components/button/Button";
-import genresCombinator from "@/utils/genreCombinator";
+import SearchInput from "@/components/forms/search/SearchInput";
+import Button from "@/components/actionControl/button/";
+import Card from "@/components/card/";
 
-// UI Components
-import ContentFilter from "@/components/UIComponent/content_filter";
+// PageComponents
+import { ContentFilter } from "@/pageComponents/browse/contentFilter";
+import { handleSearchQuery } from "@/pageComponents/browse/handleSearchQuery";
 
 // utils imports
-import { fetchErrorHandler } from "@/utils/fetchErrorHandler";
-import { getBoxDataValue } from "@/utils/getBoxDataValue";
+import { getSearchComicUrl } from "@/utils/getSearchComicUrl";
+import useFetch from "@/hooks/useFetch";
 
-function handleSearchQuery({ page }) {
-  // search words
-  const word = document.getElementById("search-comic");
-  const wordValue = word.value.toString();
-
-  // content_filter
-  const includedGenres = getBoxDataValue({ dataType: "genre" });
-  const excludedGenres = getBoxDataValue({
-    dataType: "genre",
-    checked: "excluded",
-  });
-  const dataOrder = getBoxDataValue({ dataType: "order" });
-  const dataStatus = getBoxDataValue({ dataType: "status" });
-
-  const dataTranslatedLanguages = getBoxDataValue({
-    dataType: "tlLang",
-  });
-
-  const searchQuery = {
-    search: wordValue,
-    order: dataOrder,
-    status: dataStatus,
-    lang: dataTranslatedLanguages,
-    page: page,
-    genres: genresCombinator({
-      includedGenres,
-      excludedGenres: [...excludedGenres, ...GENRES_FILTER],
-    }),
-  };
-
-  return searchQuery;
-}
 export default function Browse() {
-  const [comicResult, setComicResult] = useState();
-  const [search, setSearch] = useState(false);
-  const [page, setPage] = useState(1);
+  // const [comicResult, setComicResult] = useState(undefined);
+  const [isSearching, setIsSearching] = useState(false);
+  const [currentPageIndex, setCurrentPageIndex] = useState(1);
   const [showFilter, setShowFilter] = useState(false);
 
+  const [fetchUrl, setFetchUrl] = useState(null);
+  const { data, isLoading, error } = useFetch(fetchUrl);
+
+  const comicResult = data;
+  const isComicResultLoading = isLoading;
+
   useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    const queryParams = handleSearchQuery({ page });
+    const queryParams = handleSearchQuery({ pageIndex: currentPageIndex });
     const url = getSearchComicUrl(queryParams);
-
-    setComicResult(undefined);
-    try {
-      const fetchData = async () => {
-        try {
-          const response = await fetch(url, { signal });
-          const data = await response.json();
-
-          setComicResult(data);
-        } catch (err) {
-          fetchErrorHandler(err);
-        }
-      };
-
-      fetchData();
-    } catch (err) {
-      fetchErrorHandler(err);
-    }
-
-    return () => {
-      controller.abort();
-    };
-  }, [search, page]);
+    setFetchUrl(url);
+  }, [isSearching, currentPageIndex]);
 
   return (
     <>
       <MainLayout title={"Browse"}>
         <h1>Browse Page</h1>
         <section className="browse top_green_line">
-          {/* <h2>Search</h2> */}
-          {/* {included && <h2>TESTT</h2>} */}
           <div className="searchFilter" aria-label="content_search_filter">
             <div className="searchbox-wrapper">
               <SearchInput
                 handleSearch={() => {
-                  setSearch((search) => !search);
-                  setPage((page) => (page = 1));
+                  setIsSearching((prevVal) => !prevVal);
+                  setShowFilter(false);
+                  setCurrentPageIndex(1);
                 }}
               />
               <Button
@@ -174,8 +118,7 @@ export default function Browse() {
             </>
           </div>
 
-          {/* loadingState */}
-          {!comicResult && (
+          {isComicResultLoading && (
             <section aria-label="loading" className="section-wrapper">
               <div className="card-container">
                 <div></div>
@@ -186,57 +129,55 @@ export default function Browse() {
             </section>
           )}
 
-          {/* comic found */}
-          {comicResult && (
+          {!isComicResultLoading && comicResult && (
             <section
               className="search-card-container "
               aria-label="search-card-container"
             >
               {comicResult.map((item, i) => {
                 return (
-                  <div
-                    className="card"
-                    key={item.id}
+                  <Card
+                    key={i}
+                    title={item.title}
+                    comicId={item.id}
+                    altName={item.cover.altName}
+                    src={item.cover.src}
                     onClick={() => {
                       // manual new tab
                       window.open(`/comic/${item.id}`);
                     }}
-                  >
-                    <img src={item.cover.src} alt={item.cover.altName} />
-                    <div className="caption">{item.title}</div>
-                  </div>
+                  />
                 );
               })}
             </section>
           )}
 
           <div className="center">
-            {/* show only when have fulldata */}
-            {comicResult && comicResult.length === 36 && (
+            {!isComicResultLoading && comicResult && (
               <div
                 className="pagination"
                 aria-label="browse-pagination-container"
               >
-                {/* handle NextPage */}
-                {comicResult && comicResult.length <= 36 && (
+                {comicResult.length === 36 && (
                   <Button
                     name="Next"
                     onClick={() => {
-                      setComicResult(undefined);
-                      setPage((page) => page + 1);
+                      setCurrentPageIndex((page) => {
+                        return page + 1;
+                      });
                     }}
                   />
                 )}
-                <span>{page}</span>
+                <span>{currentPageIndex}</span>
 
-                {/* handle PrevPage */}
-                {comicResult && page !== 1 && (
+                {currentPageIndex !== 1 && (
                   <Button
                     name="Prev"
                     onClick={() => {
-                      if (page >= 2) {
-                        setComicResult(undefined);
-                        setPage((page) => page - 1);
+                      if (currentPageIndex >= 2) {
+                        setCurrentPageIndex((page) => {
+                          return page - 1;
+                        });
                       }
                     }}
                   />
@@ -244,7 +185,6 @@ export default function Browse() {
               </div>
             )}
 
-            {/* not found requested data */}
             {comicResult && comicResult.length === 0 && <div>Not Found</div>}
           </div>
         </section>

@@ -5,8 +5,7 @@ import { useState, useEffect } from "react";
 import { getComicData } from "@/data/fetchData";
 
 // component imports
-import Card from "@/components/card";
-import LinkBtn from "@/components/link_btn";
+import Card from "@/components/card/card";
 
 // utlis imports
 import { fetchErrorHandler } from "@/utils/fetchErrorHandler";
@@ -61,18 +60,13 @@ export default function SectionLayout({ title, url, children, maxData = 10 }) {
             comicData.map((item, i) => {
               if (i < maxData) {
                 return (
-                  <LinkBtn
+                  <Card
                     key={item.id}
-                    href={`/comic/${item.id}`}
-                    blank={true}
-                  >
-                    <Card
-                      name={item.title}
-                      comicId={item.id}
-                      src={item.cover.src}
-                      altName={item.cover.altName}
-                    />
-                  </LinkBtn>
+                    comicId={item.id}
+                    src={item.cover.src}
+                    altName={item.cover.altName}
+                    title={item.title}
+                  />
                 );
               }
             })}

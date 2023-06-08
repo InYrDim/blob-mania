@@ -587,7 +587,7 @@ h1 {
 .checkbox-container {
   margin-block-start: var(--s-md);
 }
-.checkbox-container .checkbox-title {
+.checkbox-container .checkbox-container-title {
   font-size: var(--f-2sm);
   text-transform: capitalize;
   font-weight: 500;
@@ -595,7 +595,7 @@ h1 {
   padding-inline: var(--s-sm);
   width: fit-content;
 }
-.checkbox-container[data-layout="main"] > .checkbox-title {
+.checkbox-container[data-layout="main"] > .checkbox-container-title {
   background-color: rgba(var(--clr-primary-20));
   padding-inline: var(--s-sm);
   padding-block: var(--s-sm);
@@ -612,7 +612,7 @@ h1 {
   display: flex !important;
   flex-direction: column;
 }
-.checkbox-container[data-layout="subgenres"] .checkbox-title {
+.checkbox-container[data-layout="subgenres"] .checkbox-container-title {
   font-size: var(--f-sm);
   text-transform: capitalize;
   font-weight: 300;

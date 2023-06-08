@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 import { useState, useContext } from "react";
 
 // components imports
-import LinkBtn from "@/components/link_btn";
+import LinkBtn from "@/components/actionControl/link/linkButton";
 // import BlobManiaLogoText from "@/components/logomark/blobManiaText";
 import BlobMania from "@/components/logomark/blobMania";
 
 // data imports
 import { navigations } from "@/data/mainNavigations";
-import HamburgerButton from "../hamburger/";
+import HamburgerButton from "@/components/actionControl/hamburger/";
 
 // define icons variable
 

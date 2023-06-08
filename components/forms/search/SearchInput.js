@@ -1,5 +1,4 @@
 import style from "./search.module.css";
-import Button from "../button/Button";
 
 export default function SearchInput({ handleSearch }) {
   return (
@@ -12,7 +11,13 @@ export default function SearchInput({ handleSearch }) {
         aria-label="search-comic-input"
         name="search-comic"
       />
-      <Button name="search" onClick={handleSearch} />
+      <button
+        name="search"
+        onClick={handleSearch}
+        aria-label="search_action_button"
+      >
+        search
+      </button>
     </div>
   );
 }

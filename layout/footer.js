@@ -5,7 +5,7 @@ import Script from "next/script";
 import { socialsData } from "@/data/socialsData";
 
 // components imports
-import LinkBtn from "@/components/link_btn";
+import LinkBtn from "@/components/actionControl/link/linkButton";
 import BlobMania from "@/components/logomark/blobMania";
 import MediaSocialIcon from "@/components/logomark/social";
 

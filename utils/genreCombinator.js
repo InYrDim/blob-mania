@@ -1,7 +1,7 @@
 import arrayToStringCombinator from "./stringCombinator";
 import { GENRES_FILTER } from "@/data/genresFilter";
 
-export default function genresCombinator({
+export function genresCombinator({
   includedGenres = [],
   excludedGenres = GENRES_FILTER,
 } = {}) {

@@ -1,11 +1,11 @@
 // library import
-import LinkBtn from "@/components/link_btn";
+import LinkBtn from "@/components/actionControl/link/linkButton";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 
 import Select from "react-select";
-import PaginationButton from "@/components/paginationButton";
+import AnchorButton from "@/components/actionControl/anchor/paginationButton";
 
 // define variables
 const domain = "https://bato-to.vercel.app/read";
@@ -109,15 +109,17 @@ export default function ReadComic() {
           />
 
           <div className="single-page-control">
-            <PaginationButton
-              chapterData={chapterData}
-              comicID={comicID}
-              type="prev"
+            <AnchorButton
+              pageType={chapterData.pagination.prev}
+              comicId={comicID}
+              name="prev"
+              pageCondition={chapterData.pagination.hasPrev}
             />
-            <PaginationButton
-              chapterData={chapterData}
-              comicID={comicID}
-              type="next"
+            <AnchorButton
+              pageType={chapterData.pagination.next}
+              comicId={comicID}
+              name="next"
+              pageCondition={chapterData.pagination.hasNext}
             />
           </div>
         </div>
@@ -189,15 +191,17 @@ export default function ReadComic() {
           />
 
           <div className="single-page-control">
-            <PaginationButton
-              chapterData={chapterData}
-              comicID={comicID}
-              type="prev"
+            <AnchorButton
+              pageType={chapterData.pagination.prev}
+              comicId={comicID}
+              name="prev"
+              pageCondition={chapterData.pagination.hasPrev}
             />
-            <PaginationButton
-              chapterData={chapterData}
-              comicID={comicID}
-              type="next"
+            <AnchorButton
+              pageType={chapterData.pagination.next}
+              comicId={comicID}
+              name="next"
+              pageCondition={chapterData.pagination.hasNext}
             />
           </div>
         </div>

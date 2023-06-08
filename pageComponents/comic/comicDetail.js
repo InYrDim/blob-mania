@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 
 // compontents imports
-import LinkBtn from "@/components/link_btn";
+import LinkBtn from "@/components/actionControl/link/linkButton";
 
 const domain = "https://bato-to.vercel.app/comic/";
 

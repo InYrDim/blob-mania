@@ -1,7 +1,6 @@
 import genresCombinator from "@/utils/genreCombinator";
-import { comicProps } from "../batoto_property";
 
-function getSearchComicUrl(requireParams = {}) {
+export function getSearchComicUrl(requireParams = {}) {
   const {
     search = "",
     genres = genresCombinator(),
@@ -29,5 +28,3 @@ function getSearchComicUrl(requireParams = {}) {
 
   return `https://bato-to.vercel.app/browse?${queryParams}`;
 }
-
-export default getSearchComicUrl;

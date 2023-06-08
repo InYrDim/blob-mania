@@ -1,7 +1,7 @@
 // libray imports
 import Link from "next/link";
 
-export default function LinkBtn({
+export default function LinkButton({
   name,
   href,
   isFill = true,
@@ -9,7 +9,6 @@ export default function LinkBtn({
   isActive = false,
   blank = "",
   children,
-  onClick,
 }) {
   return (
     <Link
@@ -20,7 +19,6 @@ export default function LinkBtn({
       data-isbordered={isBordered}
       data-active={isActive}
       target={blank && "_blank"}
-      onClick={onClick}
     >
       {name && <span>{name}</span>}
       {children}
