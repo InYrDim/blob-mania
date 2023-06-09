@@ -1,6 +1,6 @@
 import style from "./search.module.css";
 
-export default function SearchInput({ handleSearch }) {
+export default function SearchInput({ onClick }) {
   return (
     <div className={style.search_comic_input_container}>
       <input
@@ -11,11 +11,7 @@ export default function SearchInput({ handleSearch }) {
         aria-label="search-comic-input"
         name="search-comic"
       />
-      <button
-        name="search"
-        onClick={handleSearch}
-        aria-label="search_action_button"
-      >
+      <button name="search" onClick={onClick} aria-label="search_action_button">
         search
       </button>
     </div>

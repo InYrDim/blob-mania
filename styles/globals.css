@@ -557,19 +557,6 @@ footer .footer-extended a:hover {
   font-weight: 700;
 }
 
-.pagination[aria-label="browse-pagination-container"] {
-  margin-block-start: var(--s-xl);
-  width: fit-content;
-  font-size: var(--f-sm);
-  font-weight: 800;
-  border: 2px solid rgba(var(--clr-primary), 1);
-  border-radius: 4px;
-  overflow: hidden;
-}
-.pagination[aria-label="browse-pagination-container"] span {
-  padding-inline: var(--s-lg);
-}
-
 /* browse */
 .browse {
   margin-top: var(--s-md);
@@ -627,24 +614,27 @@ h1 {
   display: flex;
   justify-content: space-between;
 }
-.content_filter {
+.content-filter-wrapper {
+  display: grid;
   overflow: hidden;
-  position: relative;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--d-fast);
 }
+
+.content-filter-wrapper.show {
+  grid-template-rows: 1fr;
+}
+
 .advance-search-filter {
+  min-height: 0;
   /* animation: move var(--d-fast) ease; */
-  transition: all;
+  /* transition: all;
   transition-duration: 1000ms;
   filter: blur(5px);
   position: absolute;
-  top: -100%;
+  top: -100%; */
 }
-.content_filter.show .advance-search-filter {
-  position: relative;
-  top: 0%;
-  filter: blur(0px);
-}
-.content_filter + button {
+.content-filter-wrapper + button {
   margin-block-start: var(--s-lg);
   padding-block: var(--s-sm);
   width: 100%;

@@ -17,6 +17,7 @@ export default function AnchorButton({
 export function PaginatsionButton({ chapterData, comicID, type = "next" }) {
   if (type === "next" && chapterData.pagination.hasNext) {
     return <AnchorButton id={comicID} pageType={chapterData.pagination.next} />;
+    w;
   }
 
   if (type === "prev" && chapterData.pagination.hasPrev) {

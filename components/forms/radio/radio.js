@@ -1,6 +1,8 @@
 // library import
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { BsCircle, BsCheckCircleFill } from "react-icons/bs";
+
+// context import
 
 // styles import, same as chekcbox
 import style from "../checkbox/checkbox.module.css";

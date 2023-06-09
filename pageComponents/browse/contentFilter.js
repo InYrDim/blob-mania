@@ -12,6 +12,7 @@ export function ContentFilter() {
   return (
     <div className="advance-search-filter" aria-label="advance_search_filter">
       {/* contentType */}
+
       <SelectLayout title={comicProps.contentType.name}>
         <Radio
           name={"test"}
