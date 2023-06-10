@@ -1,4 +1,4 @@
-import LoadingCircleAnimation from "@/components/loading/circleAnimation";
+import LoadingCircleAnimation from "@/components/loading/circleLoading/circleAnimation";
 import Button from "../button/Button";
 
 import style from "./pagination.module.css";

@@ -1,8 +1,12 @@
 // library import
-import { useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { BsCircle, BsCheckCircleFill } from "react-icons/bs";
 
-// context import
+// context imports
+import {
+  useCheckboxContext,
+  useClearCheckboxContext,
+} from "@/context/selectedChecboxProvider";
 
 // styles import, same as chekcbox
 import style from "../checkbox/checkbox.module.css";
@@ -14,6 +18,12 @@ const MULTIPLE_CHECKBOX_CONDITIONS = [
 
 export default function Radio({ options, dataType = "" }) {
   const [selectedCondition, setSelectedCondition] = useState(0);
+  const { clearChecked } = useClearCheckboxContext();
+  const { setChecked } = useCheckboxContext();
+
+  useEffect(() => {
+    setSelectedCondition(0);
+  }, [clearChecked]);
 
   if (typeof options[0] !== "string") {
     return options.map((options, i) => {
@@ -27,6 +37,7 @@ export default function Radio({ options, dataType = "" }) {
             setSelectedCondition((prev) => {
               if (prev !== value) return value;
             });
+            setChecked();
           }}
           data-type={dataType}
           data-value={value}
@@ -53,6 +64,7 @@ export default function Radio({ options, dataType = "" }) {
               setSelectedCondition((prev) => {
                 if (prev !== option) return option;
               });
+              setChecked();
             }}
             data-type={dataType}
             data-value={option}

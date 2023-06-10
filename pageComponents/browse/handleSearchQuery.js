@@ -1,8 +1,22 @@
 // data imports
 import { GENRES_FILTER } from "@/data/genresFilter";
 
+// utils imports
 import { genresCombinator } from "@/utils/genreCombinator";
-import { getBoxDataValue } from "@/utils/getBoxDataValue";
+import { getNodeElements } from "@/utils/getNodeElements";
+
+function getBoxDataValue({ dataType, checked = "included" }) {
+  if (typeof dataType !== "string") return [];
+
+  const nodeElements = getNodeElements(
+    `[data-type="${dataType}"][data-checked_as=${checked}]`
+  );
+  const elements = Array.from(nodeElements, (element, i) => {
+    return element.getAttribute("data-value") || undefined;
+  });
+
+  return elements;
+}
 
 export function handleSearchQuery({ pageIndex }) {
   // search words

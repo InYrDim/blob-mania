@@ -9,14 +9,18 @@ import LinkBtn from "@/components/actionControl/link/linkButton";
 import BlobMania from "@/components/logomark/blobMania";
 import MediaSocialIcon from "@/components/logomark/social";
 
-export default function Footer() {
+import { forwardRef } from "react";
+
+// eslint-disable-next-line react/display-name
+
+function Footer(props, ref) {
   return (
     <>
       <Script id="time">{`
         document.getElementById("copyDate").innerHTML = new Date().getFullYear().toString();      
       `}</Script>
 
-      <footer>
+      <footer ref={ref}>
         <div className="footer-main">
           <div className="wrapper">
             <div>
@@ -64,3 +68,4 @@ export default function Footer() {
     </>
   );
 }
+export default forwardRef(Footer);

@@ -3,8 +3,8 @@ rgba(var(--clr-primary), 0.2)
 */
 .search_comic_input_container {
   background-color: rgba(var(--clr-primary), 0.2);
-  width: fit-content;
   display: flex;
+  width: 100%;
   font-size: var(--f-sm);
 }
 .search_comic_input {
@@ -13,6 +13,12 @@ rgba(var(--clr-primary), 0.2)
   font-size: inherit;
   border: 2px solid rgba(var(--clr-primary), 1);
   outline: unset;
+  flex: auto;
+}
+@media only screen and (min-width: 520px) {
+  .search_comic_input_container {
+    width: fit-content;
+  }
 }
 .search_comic_input_container button {
   background-color: rgba(var(--clr-primary), 1);

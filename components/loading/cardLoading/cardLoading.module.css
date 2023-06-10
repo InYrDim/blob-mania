@@ -1,0 +1,55 @@
+.card-loading {
+  display: grid;
+  margin-block-start: var(--s-md);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.card-loading > span {
+  display: flex;
+  aspect-ratio: 4/6;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+.img-loading-animation-element {
+  display: block;
+  width: 100%;
+  flex: 1;
+  background: linear-gradient(
+    -45deg,
+    rgba(var(--clr-secondary-20)) 20%,
+    rgba(var(--clr-secondary), 0.1) 50%,
+    rgba(var(--clr-secondary-20)) 70%
+  );
+  background-size: 400% 400%;
+  background-repeat: repeat;
+  background-position: left center;
+  animation: backgroundMove 1s infinite ease;
+}
+.title-loading-animation-element {
+  display: block;
+  background: linear-gradient(
+    -45deg,
+    rgba(var(--clr-secondary-20)) 20%,
+    rgba(var(--clr-secondary), 0.1) 50%,
+    rgba(var(--clr-secondary-20)) 70%
+  );
+  background-size: 400% 400%;
+  background-repeat: repeat;
+  background-position: left center;
+  min-height: 10px;
+}
+
+@media only screen and (min-width: 650px) {
+  .card-loading {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+@keyframes backgroundMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}

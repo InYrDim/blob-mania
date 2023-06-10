@@ -15,7 +15,6 @@ const useFetch = (url) => {
       if (!url) return;
 
       setLoading(true);
-
       try {
         const response = await fetch(url, { signal: signal });
         if (!response.ok) {
@@ -46,23 +45,3 @@ const useFetch = (url) => {
 };
 
 export default useFetch;
-
-// try {
-//   const fetchData = async () => {
-//     try {
-//       const response = await fetch(url, { signal });
-//       const data = await response.json();
-
-//       setComicResult(data);
-//     } catch (err) {
-//       fetchErrorHandler(err);
-//     }
-//   };
-//   fetchData();
-// } catch (err) {
-//   fetchErrorHandler(err);
-// }
-
-// return () => {
-//   controller.abort();
-// };

@@ -1,0 +1,41 @@
+.circle-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--s-sm);
+  padding-block: 2rem;
+}
+.circle-loading span {
+  display: block;
+  width: 20px;
+  height: 20px;
+  /* border-radius: 100%; */
+  background-color: rgba(var(--clr-primary), 1);
+
+  animation-name: moveUpDown;
+  /* animation-timing-function: cubic-bezier(0.99, -0.19, 0.32, 1.37); */
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+
+  opacity: 0;
+  border-radius: 10%;
+}
+
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(10px) rotate(0);
+    /* opacity: 0; */
+    background-color: rgba(var(--clr-secondary), 1);
+    box-shadow: 0px 10px 0px rgba(var(--clr-primary-20));
+  }
+  50% {
+    transform: translateY(-10px) rotate(90deg);
+    opacity: 1;
+    background-color: rgba(var(--clr-primary), 1);
+    border-radius: 50%;
+    box-shadow: 3px 3px 0px rgba(var(--clr-primary-70));
+  }
+  100% {
+    transform: translateY(10px) rotate(180deg);
+    background-color: rgba(var(--clr-secondary), 1);
+  }
+}

@@ -16,8 +16,8 @@ export default function LinkButton({
       key={href}
       aria-label="navigation-links"
       data-isfill={isFill}
-      data-isbordered={isBordered}
       data-active={isActive}
+      data-isbordered={isBordered}
       target={blank && "_blank"}
     >
       {name && <span>{name}</span>}

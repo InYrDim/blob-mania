@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsSquare, BsCheckSquareFill, BsXSquareFill } from "react-icons/bs";
 import style from "./checkbox.module.css";
+
+// context imports
+import {
+  useCheckboxContext,
+  useClearCheckboxContext,
+} from "@/context/selectedChecboxProvider";
 
 const MULTIPLE_CHECKBOX_CONDITIONS = [
   { state: "idle", icon: BsSquare() },
@@ -12,6 +18,8 @@ export default function Checkbox({ dataType, options }) {
   const [selectedConditions, setSelectedConditions] = useState(
     options.map(() => 0)
   );
+  const { setChecked } = useCheckboxContext();
+  const { clearChecked } = useClearCheckboxContext();
 
   const handleCheckboxClick = (index) => {
     setSelectedConditions((prevConditions) => {
@@ -21,6 +29,9 @@ export default function Checkbox({ dataType, options }) {
     });
   };
 
+  useEffect(() => {
+    setSelectedConditions(options.map(() => 0));
+  }, [clearChecked]);
   return (
     <>
       {options.map((option, index) => {
@@ -30,6 +41,7 @@ export default function Checkbox({ dataType, options }) {
             key={option}
             onClick={() => {
               handleCheckboxClick(index);
+              setChecked();
             }}
             data-type={dataType}
             data-value={option}

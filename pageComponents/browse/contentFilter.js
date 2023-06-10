@@ -7,12 +7,10 @@ import Radio from "@/components/forms/radio/";
 
 // data imports
 import { comicProps } from "@/data/batoto_property";
-
 export function ContentFilter() {
   return (
     <div className="advance-search-filter" aria-label="advance_search_filter">
       {/* contentType */}
-
       <SelectLayout title={comicProps.contentType.name}>
         <Radio
           name={"test"}
@@ -32,7 +30,7 @@ export function ContentFilter() {
             >
               <Checkbox
                 name={"test"}
-                options={genre.filters}
+                options={genre.filters.sort()}
                 dataType="genre"
               />
             </SelectLayout>
