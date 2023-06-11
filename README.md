@@ -2,6 +2,8 @@
 
 ## Introduction
 
+> Typescript Version of Blobmania
+
 The BlobMania is Comic Database website that allows you to explore and read a comics.
 
 Table of contents
