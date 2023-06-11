@@ -1,7 +1,3 @@
-// styles import
-
-// data imports
-
 // layouts import
 import MainLayout from "@/layout/mainLayout";
 
@@ -10,7 +6,7 @@ import MainLayout from "@/layout/mainLayout";
 export default function About() {
   return (
     <>
-      <MainLayout title={"Home"}>
+      <MainLayout title={"About"}>
         <h1>About Page</h1>
         <p>Ntar, masih progggggress yak!</p>
         <p>About pagenya belakangan, yang penting bisa baca dlu yekan :V</p>

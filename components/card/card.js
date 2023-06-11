@@ -1,24 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
-
-export default function Card({ comicId = "", src, altName, title, onClick }) {
+import style from "./card.module.css";
+export default function Card({
+  comicId = "",
+  src,
+  altName,
+  title,
+  onClick,
+  children,
+}) {
   return (
-    // <figure data-id={comicId} aria-label="card-wrapper" onClick={onClick}>
-    //   <div className="card-img-wrapper">
-    //     <img
-    //       src={src}
-    //       alt={altName}
-    //       width={300}
-    //       height={400}
-    //       loading="lazy"
-    //       aria-label="test"
-    //     />
-    //   </div>
-    //   <figcaption>{name}</figcaption>
-    // </figure>
-
-    <figure className="card" key={comicId} onClick={onClick}>
-      <img src={src} alt={altName} loading="lazy" />
-      <figcaption className="caption">{title}</figcaption>
+    <figure className={`${style.card}`} key={comicId} onClick={onClick}>
+      <div>
+        {children}
+        <img src={src} alt={altName} loading="lazy" />
+      </div>
+      <figcaption className={`${style.caption}`}>{title}</figcaption>
     </figure>
   );
 }

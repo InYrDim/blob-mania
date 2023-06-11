@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-
 // layouts import
 import MainLayout from "@/layout/mainLayout";
 
@@ -10,6 +9,7 @@ import { useState, useEffect } from "react";
 import Card from "@/components/card/";
 import Pagination from "@/components/actionControl/pagination/";
 import LoadingCardAnimation from "@/components/loading/cardLoading/cardAnimation";
+import StarsRating from "@/components/starRating/";
 
 // PageComponents
 import { handleSearchQuery } from "@/pageComponents/browse/handleSearchQuery";
@@ -64,10 +64,11 @@ export default function Browse() {
                     altName={item.cover.altName}
                     src={item.cover.src}
                     onClick={() => {
-                      // manual new tab
                       window.open(`/comic/${item.id}`);
                     }}
-                  />
+                  >
+                    <StarsRating rate={item.rating} />
+                  </Card>
                 );
               })}
             </section>
@@ -101,3 +102,6 @@ export default function Browse() {
     </>
   );
 }
+
+// rumus => minValue 1? maxValue 5, minValue 2 ? maxValue 10.
+// multiplier * 2
