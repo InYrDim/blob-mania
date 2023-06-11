@@ -1,38 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Welcome To BlobMania Repository
 
-## Getting Started
+## Introduction
 
-First, run the development server:
+The BlobMania is Comic Database website that allows you to explore and read a comics.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Table of contents
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Welcome To BlobMania Repository](#welcome-to-blobmania-repository)
+  - [Introduction](#introduction)
+  - [Technologies](#technologies)
+  - [Data Source](#data-source)
+    - [**Important Note**](#important-note)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Technologies
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+To create this website, I utilized Fullstack JavaScript with [Next.js](https://nextjs.org/). For other dependencies, you can see on `package.json` file.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Data Source
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To fill this site with comic, I implemented a web scraping process. This involved extracting relevant information from the popular [bato.to](https://bato.to/) website.
 
-## Learn More
+I have separate repository for the scrapper
 
-To learn more about Next.js, take a look at the following resources:
+> [**visit here**](https://github.com/YeaGram/bato-to)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### **Important Note**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+I think the data in _[bato.to](https://bato.to/)_ site is coming from uploader of that page.Since uploader can be anyone, that means the data/comic may duplicated or maybe not relevent with name or genres and so on.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Thank you for visiting the BlobMania Repository.
