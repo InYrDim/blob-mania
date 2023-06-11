@@ -1,0 +1,12 @@
+.pagination {
+  margin-block-start: var(--s-xl);
+  width: fit-content;
+  font-size: var(--f-sm);
+  font-weight: 800;
+  border: 2px solid rgba(var(--clr-primary), 1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.pagination span {
+  padding-inline: var(--s-lg);
+}

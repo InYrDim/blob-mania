@@ -4,7 +4,7 @@
 import { homeData } from "@/data/homeData";
 
 // layouts import
-import SectionLayout from "@/components/UIComponent/section";
+import SectionLayout from "@/pageComponents/home/section";
 import MainLayout from "@/layout/mainLayout";
 
 export default function Home() {

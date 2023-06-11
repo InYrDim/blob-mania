@@ -233,8 +233,8 @@ const dataStatus = {
 };
 
 export const comicProps = {
-  contentType,
   domain: "https://battwo.com",
+  contentType,
   orders: dataOrders,
   genres: dataGenres,
   status: dataStatus,

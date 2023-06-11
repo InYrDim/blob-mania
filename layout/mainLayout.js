@@ -1,7 +1,7 @@
 // layout import
-import Footer from "../components/UIComponent/footer";
-import MainHeader from "../components/UIComponent/header";
+import Footer from "./footer";
 import HeadLayout from "./headLayout";
+import MainHeader from "./header";
 
 // library imports
 import { Nunito } from "next/font/google";

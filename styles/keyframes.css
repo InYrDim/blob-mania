@@ -1,0 +1,41 @@
+@keyframes blink {
+  0% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+  100% {
+  }
+}
+@keyframes blink-2 {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  50% {
+    opacity: 0.67;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+@keyframes move {
+  0% {
+    opacity: 0;
+    margin-top: -100vw;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 0vw;
+  }
+}

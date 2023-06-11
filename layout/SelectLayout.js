@@ -9,7 +9,7 @@ export default function SelectLayout({
       aria-label={`${title}_checkbox`}
       data-layout={layout}
     >
-      <p className="checkbox-title">{title}</p>
+      <p className="checkbox-container-title">{title}</p>
       <div className="checkbox-items-container custom-colums">{children}</div>
     </div>
   );
