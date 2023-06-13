@@ -1,5 +1,4 @@
 // layouts import
-import useSwitchState from "@/hooks/useSwitchState";
 import MainLayout from "@/layout/mainLayout";
 import { useState } from "react";
 
