@@ -9,14 +9,12 @@ import LinkBtn from "@/components/actionControl/link/linkButton";
 import BlobMania from "@/components/logomark/blobMania";
 
 // data imports
-import { navigations } from "@/data/mainNavigations";
 import HamburgerButton from "@/components/actionControl/hamburger/";
 
 // define icons variable
 
 // styles imports
 export default function MainHeader() {
-  const path = useRouter().asPath;
   const [active, setActive] = useState(false);
 
   return (
@@ -31,24 +29,46 @@ export default function MainHeader() {
           </Link>
           <HamburgerButton
             onClick={() => {
-              setActive(active ? false : true);
+              setActive((prevVal) => !prevVal);
             }}
           />
         </div>
 
-        <nav className={`main_header_nav ${active ? "active" : ""}`}>
-          {navigations.map((nav) => {
-            return (
-              <LinkBtn
-                key={nav.name}
-                name={nav.name}
-                href={nav.path}
-                isActive={path === nav.path}
-              />
-            );
-          })}
-        </nav>
+        <MainNavigation active={active} />
       </div>
     </header>
+  );
+}
+
+function MainNavigation({ active = false }) {
+  const path = useRouter().asPath;
+  const navigations = [
+    {
+      name: "Home",
+      path: "/",
+    },
+    {
+      name: "About",
+      path: "/about",
+    },
+    {
+      name: "Browse",
+      path: "/browse",
+    },
+  ];
+
+  return (
+    <nav className={`main_header_nav`} data-is-active={active}>
+      {navigations.map((nav) => {
+        return (
+          <LinkBtn
+            key={nav.name}
+            name={nav.name}
+            href={nav.path}
+            isActive={path === nav.path}
+          />
+        );
+      })}
+    </nav>
   );
 }

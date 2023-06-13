@@ -1,16 +1,15 @@
 import { fetchErrorHandler } from "@/utils/fetchErrorHandler";
-
 import { useState, useEffect } from "react";
 
 const useFetch = (url) => {
-  const controller = new AbortController();
-  const signal = controller.signal;
-
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     const fetchData = async () => {
       if (!url) return;
 

@@ -45,7 +45,7 @@
     transition: all;
     transition-duration: 300ms;
   }
-  header.main_header .main_header_nav.active {
+  header.main_header .main_header_nav[data-is-active="true"] {
     max-height: 500px;
   }
   header.main_header .main_header_nav a {
