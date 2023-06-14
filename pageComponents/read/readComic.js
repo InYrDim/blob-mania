@@ -3,9 +3,12 @@ import LinkBtn from "@/components/actionControl/link/linkButton";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import { BsFillArrowUpSquareFill } from "react-icons/bs";
 
 import Select from "react-select";
 import AnchorButton from "@/components/actionControl/anchor/paginationButton";
+import useScrollDirection from "@/hooks/usePageScroll";
+import LoadingCircleAnimation from "@/components/loading/circleLoading/circleAnimation";
 
 // define variables
 const domain = "https://bato-to.vercel.app/read";
@@ -204,20 +207,23 @@ export default function ReadComic() {
               pageCondition={chapterData.pagination.hasNext}
             />
           </div>
+
+          <ArrowNavigation />
         </div>
       </div>
     );
   }
 
+  return <LoadingCircleAnimation />;
+}
+
+function ArrowNavigation() {
+  const { isScrollUp } = useScrollDirection();
   return (
-    <div
-      style={{
-        display: "grid",
-        placeItems: "center",
-        padding: "5rem",
-      }}
-    >
-      LoadingState
-    </div>
+    <>
+      <a href="#" className={`button-to-top ${isScrollUp ? "show" : ""}`}>
+        <BsFillArrowUpSquareFill />
+      </a>
+    </>
   );
 }

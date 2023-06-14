@@ -138,7 +138,6 @@ export default function ComicDetail() {
                 <LinkBtn
                   href={`/comic/${comicId}/read/${chapterSugested(0).id}`}
                   name={chapterSugested(0).name}
-                  blank={true}
                 />
               </div>
               <div aria-label="newest-chapter">
@@ -146,7 +145,6 @@ export default function ComicDetail() {
                 <LinkBtn
                   href={`/comic/${comicId}/read/${chapterSugested().id}`}
                   name={chapterSugested().name}
-                  blank={true}
                 />
               </div>
               {latestReadedChapter.length !== 0 && (
@@ -155,7 +153,6 @@ export default function ComicDetail() {
                   <LinkBtn
                     href={`/comic/${comicId}/read/${latestReadedChapter.id}`}
                     name={latestReadedChapter.name}
-                    blank={true}
                   />
                 </div>
               )}
@@ -182,7 +179,6 @@ export default function ComicDetail() {
                       key={chapter.id}
                       href={`/comic/${comicId}/read/${chapter.id}`}
                       name={chapter.name}
-                      blank={true}
                     />
                   );
                 })

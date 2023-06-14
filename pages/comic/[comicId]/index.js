@@ -10,12 +10,8 @@ import ComicDetail from "@/pageComponents/comic/comicDetail";
 // fonts definitions
 
 // library imports
-import { useRouter } from "next/router";
 
 export default function Comic() {
-  const routerPath = useRouter().asPath;
-  const id = routerPath.split(/\//).pop();
-
   return (
     <>
       <MainLayout>
