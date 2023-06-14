@@ -2,7 +2,6 @@
 
 // data imports
 import Button from "@/components/actionControl/button/Button";
-import LinkButton from "@/components/actionControl/link/linkButton";
 import Card from "@/components/card/card";
 import LoadingCardAnimation from "@/components/loading/cardLoading/cardAnimation";
 import useFetch from "@/hooks/useFetch";
@@ -10,6 +9,12 @@ import useFetch from "@/hooks/useFetch";
 // layouts import
 import MainLayout from "@/layout/mainLayout";
 import { useEffect, useState } from "react";
+
+import { Poppins } from "next/font/google";
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["700"],
+});
 
 const HOME_DATA = [
   {
@@ -50,6 +55,7 @@ export default function Home() {
   return (
     <>
       <MainLayout title={"Home"}>
+        <Greetings />
         <div className="home-comic-container">
           <div className="home-comic-nav">
             {HOME_DATA.map((value, i) => {
@@ -65,33 +71,45 @@ export default function Home() {
               );
             })}
           </div>
-          {isLoading ? (
-            <LoadingCardAnimation />
-          ) : (
-            <div className="home-comic-data-container">
-              <h2 className="home-title">{HOME_DATA[selectedTab].title}</h2>
-              <div className="home-comic-data">
-                {comicData?.map((item, i) => {
-                  return (
-                    <Card
-                      key={i}
-                      title={item.title}
-                      comicId={item.id}
-                      altName={item.cover.altName}
-                      src={item.cover.src}
-                      onClick={() => {
-                        window.open(`/comic/${item.id}`);
-                      }}
-                    />
-                  );
-                })}
-                )
-              </div>
-            </div>
-          )}
+          <div className="home-comic-data-container">
+            {isLoading ? (
+              <LoadingCardAnimation />
+            ) : (
+              <>
+                <h2 className="home-title">{HOME_DATA[selectedTab].title}</h2>
+                <div className="home-comic-data">
+                  {comicData?.map((item, i) => {
+                    if (i < 12) {
+                      return (
+                        <Card
+                          key={i}
+                          title={item.title}
+                          comicId={item.id}
+                          altName={item.cover.altName}
+                          src={item.cover.src}
+                          onClick={() => {
+                            window.open(`/comic/${item.id}`);
+                          }}
+                        />
+                      );
+                    }
+                  })}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </MainLayout>
     </>
+  );
+}
+
+function Greetings() {
+  return (
+    <div className={`${poppins.className} greeting`}>
+      <h1>Read and Explore</h1>
+      <p>Community upload Comic</p>
+    </div>
   );
 }
 
