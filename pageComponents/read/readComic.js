@@ -214,7 +214,11 @@ export default function ReadComic() {
     );
   }
 
-  return <LoadingCircleAnimation />;
+  return (
+    <div className="centerLoadingContainer">
+      <LoadingCircleAnimation />
+    </div>
+  );
 }
 
 function ArrowNavigation() {

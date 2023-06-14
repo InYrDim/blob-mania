@@ -5,6 +5,7 @@ import Head from "next/head";
 
 // compontents imports
 import LinkBtn from "@/components/actionControl/link/linkButton";
+import LoadingCircleAnimation from "@/components/loading/circleLoading/circleAnimation";
 
 const domain = "https://bato-to.vercel.app/comic/";
 
@@ -191,14 +192,8 @@ export default function ComicDetail() {
       </div>
     </div>
   ) : (
-    <div
-      style={{
-        display: "grid",
-        placeItems: "center",
-        padding: "5rem",
-      }}
-    >
-      LoadingState
+    <div className="centerLoadingContainer">
+      <LoadingCircleAnimation />
     </div>
   );
 }
