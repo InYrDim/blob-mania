@@ -8,8 +8,12 @@ import { forwardRef } from "react";
 
 const socialMedia = [
   { name: "telegram", url: "/", icon: telegram() },
-  { name: "instagram", url: "/", icon: instagram() },
-  { name: "github", url: "/", icon: github() },
+  {
+    name: "instagram",
+    url: "https://www.instagram.com/dms_jn/",
+    icon: instagram(),
+  },
+  { name: "github", url: "https://github.com/InYrDim", icon: github() },
 ];
 
 function Footer(props, ref) {
@@ -29,7 +33,11 @@ function Footer(props, ref) {
                 Comic database <br />
                 that wrapped by hobbie.
               </span>
-              <LinkBtn name={"Contact Author"} href={"/"} />
+              <LinkBtn
+                target="_blank"
+                name={"Contact Author"}
+                href={"https://wa.me/+6281524606995?text=p"}
+              />
             </div>
           </div>
           <div>
