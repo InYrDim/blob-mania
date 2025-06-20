@@ -65,7 +65,7 @@ function Footer(props, ref) {
       <div className="footer-extended">
         copyright &copy;blobmania
         <ClientDate />. Made with ❤️ by
-        <LinkBtn name={"yeagram"} href={"/"} />. Read Terms of use.
+        <LinkBtn name={"inyrdim"} href={"/"} />. Read Terms of use.
       </div>
     </footer>
   );
